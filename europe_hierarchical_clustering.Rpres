@@ -1,0 +1,53 @@
+Europe Hierarchical Clustering- A Shiny App
+========================================================
+author: Hui-yu Yang
+date: July 25, 2015
+
+Introduction
+========================================================
+
+The data is from the CIA World Factbook which gives some information about 28 European countries. 
+
+The goal of the shiny app is to group these 28 European countries into different number of clusters based on user-specified clustering method and the number of clusters. 
+
+The method used for classification is called Hierarchical Clustering. So, what is it? 
+
+Hierarchical Clustering Method 
+========================================================
+
+Two types of hierarchical clustering: 
+
+1. Agglomerative - Bottom up approach
+2. Divisive - Top down approach
+
+We either start with one country and try to find the one that's closest to it, or start with all of the countries and find the least similar one to the rest of the countries. 
+
+How do you determine how "close" or "different" the countries are? 
+
+Dissimilarity Measure  
+========================================================
+
+- dissimilarity measure = distance matrix + linkage criterion
+
+- Distance matrix includes: Euclidean distance, Manhattan distance.
+
+- Linkage critterion: how pairwise distances of observations in the sets was linked, including <br>
+-- complete linkage: find closest pairs<br>
+-- single linkage: find least closest pairs<br>
+-- average linkage: average all pairwise distances<br>
+-- Ward's minimum variance method: create compact and spherical clusters<br>
+
+Sample Shiny App Output
+========================================================
+
+This are the sample clustering plot that we would get with "Euclidean distance," "Single Linkage," and 3 clusters. 
+
+```{r,echo=F, fig.width=20, fig.height=10}
+data <- read.csv("http://www.instantr.com/wp-content/uploads/2013/01/europe.csv")
+euroclust <- hclust(dist(data[-1], method='euclidean'), method= 'single')
+par(mfrow=c(1,1))
+plot(euroclust, labels = data$Country, xlab="European Countries", cex=1)
+rect.hclust(euroclust, 3)
+  
+```
+
